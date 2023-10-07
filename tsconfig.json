@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "WebWorker"],
+  },
+  "files": ["src/types/global.d.ts"],
+  "exclude": ["node_modules/**", "dist", "__tests__", "*.stories.@{js|jsx|ts|tsx}"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"]
+}
