@@ -37,7 +37,7 @@ public class AbcdController extends XXController {
    * @return 
    */
    @PostMapping(value = "/register/{id}", ppp - PPPP)
-   public PageInfo<BasicInfo> register(@RequestBody MyInfo info) 
+   public Map<String, Object> register(@RequestBody MyInfo info) 
   {
     return xxx;
   }

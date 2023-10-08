@@ -13,8 +13,7 @@ import BaseParser from './BaseParser';
 const EnumParser: ParserContructor = class EnumParser extends BaseParser {
   static ENUM_RE = /public\s+enum\s+(?<enum_name>\w+)/g
 
-  // TODO 更多形式
-  static PROPERTY_RE = /\s(?<key>[A-Z_]+?)\((?<value>\S+?)\s*,\s*(?<desc>\S+?)\)/g
+  static PROPERTY_RE = /(?<key>[A-Z_]+?)(?:\((?<value>\S+?)\s*(?:,\s*(?<desc>\S+?))?\))?[,;]/gm
 
   private enumName: string;
   private properties: EnumProperty[];
@@ -52,14 +51,14 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
     if (!this.properties.length) return '';
     const enumType = getJSType(this.properties[0].type);
     let result = new RegExp(EnumParser.PROPERTY_RE).test(this.javaCode)
-      ? this.properties.map(prop => {
+      ? this.properties.map((prop, propIdx) => {
         const {desc, key, value, type} = prop
-        const pVlu = replaceQuote(value, `'`)
-        const pDesc = replaceQuote(desc)
-        return '  ' + `${key}: ${pVlu}, // ${pDesc}`.trim()
+        const pVlu = value ? `: ${replaceQuote(value, `'`)}` : `: ${propIdx}`
+        const pDesc = desc ? `// ${replaceQuote(desc)}` : ``
+        return '  ' + `${key}${pVlu}, ${pDesc}`.trim()
       }).join('\n').trim()
       : '* @todo no property'
-    result = `export const ${this.enumName} = {\n${result}\n}`
+    result = `export const ${this.enumName} = {\n  ${result}\n}\n`
     result = `/**\n * @readonly\n * @enum {${enumType}}\n */\n${result}`
     return formatParagraph(result);
   }

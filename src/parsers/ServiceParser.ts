@@ -99,9 +99,11 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
         ? `...${param}`
         : param
       )
-      .join(',\n      ')
     const mtd = service.method.toLowerCase()
     const paramsKey = /(post|put|patch|delete)/.test(mtd) ? 'body' : 'params'
+    const data = bodyOrParams.length ? `${paramsKey}: {
+      ${bodyOrParams.join(',\n      ')}
+    }` : ''
 
     return `/** ${funcName}
  * @url ${url}
@@ -112,9 +114,7 @@ export function ${funcName} (${funcArgs}) {
   return ${this.meta.jsDocServiceRequestInstanceName}({
     url: ${reqUrl},
     method: '${mtd}',
-    ${paramsKey}: {
-      ${bodyOrParams}
-    }
+    ${data}
   })
 }
   `

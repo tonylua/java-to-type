@@ -12,8 +12,6 @@ export function cccQueryById (id) {
   return request({
     url: `/ccc/queryById/${id}`,
     method: 'get',
-    params: {
-    }
   })
 }
 /** cccMyList
@@ -36,7 +34,7 @@ export function cccMyList (info) {
  * @url /ccc/register/{id}
  * @method POST
  * @param {MyInfo}  [info]
- * @return {Promise<PageInfo<BasicInfo>>}
+ * @return {Promise<Map<String, Object>>}
  */
 export function cccRegister (info) {
   return request({

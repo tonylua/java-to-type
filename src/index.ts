@@ -14,7 +14,7 @@ function parseJava(javaCode: string, javaPath: string, option?: ParseOption) {
   // service
   if (option?.isService || /@RestController/.test(javaCode))
     parser = ServiceParser;
-  // 普通 enum
+  // enum
   else if (option?.isEnum || /public\s+enum\s+/.test(javaCode))
     parser = EnumParser;
   // pojo
