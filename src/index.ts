@@ -1,4 +1,4 @@
-import {ParseResult, ParserContructor} from "./types/Parser";
+import type {ParseOption, ParseResult, ParserContructor} from "./types/Parser";
 import ServiceParser from "./parsers/ServiceParser";
 import EnumParser from "./parsers/EnumParser";
 import PojoParser from "./parsers/PojoParser";
@@ -9,10 +9,7 @@ const {readJava} = require("./utils/file");
 
 // TODO 匹配更多特征
 // TODO 特征放在外部配置文件中
-function parseJava(javaCode: string, javaPath: string, option?: {
-  isEnum?: boolean;
-  isService?: boolean;
-}) {
+function parseJava(javaCode: string, javaPath: string, option?: ParseOption) {
   let parser: ParserContructor;
   // service
   if (option?.isService || /@RestController/.test(javaCode))
@@ -27,14 +24,14 @@ function parseJava(javaCode: string, javaPath: string, option?: {
   return null;
 }
 
-function parseDir(dirPath: string) {
+function parseDir(dirPath: string, option?: ParseOption) {
   const files = fs.readdirSync(dirPath);
   return files.reduce((acc: ParseResult[], file: File) => {
     if (path.extname(file) !== ".java") return acc;
     const javaPath = path.join(dirPath, file);
     const javaCode = readJava(javaPath);
     if (!javaCode) return acc;
-    acc.push(parseJava(javaCode, javaPath));
+    acc.push(parseJava(javaCode, javaPath, option));
     return acc;
   }, []);
 }

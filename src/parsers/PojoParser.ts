@@ -1,7 +1,7 @@
-import pick from 'lodash-es/pick'
+import {pick} from '../utils/object'
 import {getJSType} from '../utils/type'
 import {formatParagraph} from '../utils/text'
-import {
+import type {
   ParserMeta,
   ParserContructor,
   ParseType,

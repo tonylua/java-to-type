@@ -1,4 +1,4 @@
-import {ParserMeta} from "../types/Parser";
+import type {ParserMeta} from "../types/Parser";
 
 export const DefaultParserMeta: ParserMeta = {
   jsDocServiceRequestInstanceName: 'request',

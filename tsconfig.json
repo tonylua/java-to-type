@@ -5,5 +5,5 @@
   },
   "files": ["src/types/global.d.ts"],
   "exclude": ["node_modules/**", "dist", "__tests__", "*.stories.@{js|jsx|ts|tsx}"],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", ".eslintrc.js"]
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", ".eslintrc.js"]
 }

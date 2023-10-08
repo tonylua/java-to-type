@@ -1,5 +1,5 @@
 import {DefaultParserMeta} from '../utils/constants';
-import {
+import type {
   IParser,
   ParserMeta,
   ParseType,

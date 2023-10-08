@@ -1,7 +1,7 @@
-import pick from 'lodash-es/pick'
+import {pick} from '../utils/object'
 import {getJSType} from '../utils/type'
 import {formatParagraph} from '../utils/text'
-import {
+import type {
   ParserMeta,
   ParserContructor,
   ControllerType,
@@ -64,7 +64,7 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
   }
 
   private _renderServices(service: ServiceType) {
-    const url = `${this.controller.url}${service.url}`
+    const url = `${this.controller.url}${service.url}`.replace(/\/+/g, '/')
     const reqUrl = service.params.reduce((acc, param) => {
       const {param_name, param_annotation: pa} = param;
       const placeholder = `{${param_name}}`
@@ -122,7 +122,7 @@ export function ${funcName} (${funcArgs}) {
 
   private _getJSDoc() {
     const cont = formatParagraph(
-      this.services.map(this._renderServices)
+      this.services.map(this._renderServices.bind(this))
         .join('\n')
         .trim()
     )

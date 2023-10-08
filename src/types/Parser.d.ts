@@ -9,6 +9,11 @@ export interface ParserContructor {
   new(javaCode: string, javaPath: string, meta?: ParserMeta): IParser;
 }
 
+export type ParseOption = {
+  isEnum?: boolean;
+  isService?: boolean;
+}
+
 export type ParseType = 'jsdoc' | 'ts'
 
 export interface IParser {
