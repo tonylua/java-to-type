@@ -1,21 +1,19 @@
-import {IParser} from "./parsers/Parser.d";
+import {ParseResult, ParserContructor} from "./types/Parser";
+import ServiceParser from "./parsers/ServiceParser";
+import EnumParser from "./parsers/EnumParser";
+import PojoParser from "./parsers/PojoParser";
 
 const fs = require("fs");
 const path = require("path");
 const {readJava} = require("./utils/file");
-const ServiceParser = require("./parsers/ServiceParser");
-const EnumParser = require("./parsers/EnumParser");
-const PojoParser = require("./parsers/PojoParser");
-
-type ParseOption = {
-  isEnum?: boolean;
-  isService?: boolean;
-};
 
 // TODO 匹配更多特征
 // TODO 特征放在外部配置文件中
-function parse(javaCode: string, javaPath: string, option?: ParseOption) {
-  let parser: IParser;
+function parseJava(javaCode: string, javaPath: string, option?: {
+  isEnum?: boolean;
+  isService?: boolean;
+}) {
+  let parser: ParserContructor;
   // service
   if (option?.isService || /@RestController/.test(javaCode))
     parser = ServiceParser;
@@ -25,23 +23,23 @@ function parse(javaCode: string, javaPath: string, option?: ParseOption) {
   // pojo
   else if (/public\s+class\s+/.test(javaCode)) parser = PojoParser;
 
-  if (parser) return new parser(javaCode, javaPath).parse();
+  if (parser) return new parser(javaCode, javaPath).parse('jsdoc');
   return null;
 }
 
 function parseDir(dirPath: string) {
   const files = fs.readdirSync(dirPath);
-  return files.reduce((acc, file) => {
+  return files.reduce((acc: ParseResult[], file: File) => {
     if (path.extname(file) !== ".java") return acc;
     const javaPath = path.join(dirPath, file);
     const javaCode = readJava(javaPath);
     if (!javaCode) return acc;
-    acc.push(parse(javaCode, javaPath));
+    acc.push(parseJava(javaCode, javaPath));
     return acc;
   }, []);
 }
 
 module.exports = {
-  parse,
+  parseJava,
   parseDir,
 };

@@ -11,6 +11,6 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "import", "prettier"],
   rules: {
-    "max-len": ["error", {code: 80, ignoreRegExpLiterals: true}],
+    "max-len": ["error", {code: 80, ignoreRegExpLiterals: true, ignoreComments: true}],
   },
 };

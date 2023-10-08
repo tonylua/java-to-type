@@ -1,67 +1,56 @@
 import pick from 'lodash-es/pick'
-import {IParser, ParserContructor} from "./Parser.d";
+import {getJSType} from '../utils/type'
+import {formatParagraph} from '../utils/text'
+import {
+  ParserMeta,
+  ParserContructor,
+  ControllerType,
+  ServiceType,
+  ServiceParamType,
+  ParseType,
+  ParseResult
+} from "../types/Parser";
+import BaseParser from './BaseParser';
 
-type ControllerType = {
-  url: string;
-  name: string
-}
+const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
+  static CONTROLLER_RE = /@RestController\s*\n\s*@RequestMapping\(\"(?<url>[\w\/_-{}:]+?)\"\)\s*\npublic\s+class\s+(?<name>\w+?)Controller\s+/g;
 
-type ParamType = {
-  param_annotation?: string;
-  param_type: string;
-  param_name: string
-}
+  static SERVICE_RE = /(\/\*{2}\n\s+\*\s+(?<desc>[^@\s]*?)\n(?:[\s\S]+?))?@(?:(?<method>Get|Post|Update|Put|Delete)?)Mapping\(\s*value\s*=\s*"(?<url>[\w\/_-{}:]+?)\".*?\)(?:[\s\S]+?)public\s+(?<res>[\w<>_[\](,\s)]+?)\s+(?<name>[\w_-]+?)\((?<params_str>[\s\S]+?)?\)\s*{/gi;
 
-type ServiceType = {
-  desc?: string;
-  method: string;
-  url: string;
-  res: string;
-  name: string;
-  params: ParamType[]
-}
+  static PARAM_RE = /(?<param_annotation>@.*?\s)?(?<param_type>\w+)\s+(?<param_name>\w+)(?:,\s*)?/g;
 
-const ServiceParser: ParserContructor = class ServiceParser implements IParser {
-  static ControllerRe = /@RestController\s*\n\s*@RequestMapping\(\"(?<url>[\w\/_-{}:]+?)\"\)\s*\npublic\s+class\s+(?<name>\w+?)Controller\s+/g;
+  private controller: ControllerType;
+  private services: ServiceType[];
 
-  static ServiceRe = /(\/\*{2}\n\s+\*\s+(?<desc>[^@\s]*?)\n(?:[\s\S]+?))?@(?:(?<method>Get|Post|Update|Put|Delete)?)Mapping\(\s*value\s*=\s*"(?<url>[\w\/_-{}:]+?)\".*?\)(?:[\s\S]+?)public\s+(?<res>[\w<>_[\](,\s)]+?)\s+(?<name>[\w_-]+?)\((?<params_str>[\s\S]+?)?\)\s*{/gi;
-
-  static ParamRe = /(?<param_annotation>@.*?\s)?(?<param_type>\w+)\s+(?<param_name>\w+)(?:,\s*)?/g;
-
-  javaCode: string;
-  javaPath: string;
-  controller: ControllerType;
-  services: ServiceType[];
-
-  constructor(javaCode: string, javaPath: string) {
-    this.javaCode = javaCode;
-    this.javaPath = javaPath;
+  constructor(
+    javaCode: string,
+    javaPath: string,
+    meta?: ParserMeta
+  ) {
+    super(javaCode, javaPath, meta);
     this._getController();
     this._getServices();
     return this;
   }
 
   private _getController() {
-    const match = new RegExp(ServiceParser.ControllerRe).exec(this.javaCode)
+    const match = new RegExp(ServiceParser.CONTROLLER_RE).exec(this.javaCode)
     if (!match?.groups) throw new Error('invalid controller')
     this.controller = pick(match.groups, 'url', 'name');
   }
 
   private _getServices() {
     const services: ServiceType[] = []
+    const sRe = new RegExp(ServiceParser.SERVICE_RE)
     let serviceMatch: RegExpMatchArray;
-    while ((
-      serviceMatch = new RegExp(ServiceParser.ServiceRe).exec(this.javaCode)
-    ) !== null) {
+    while ((serviceMatch = sRe.exec(this.javaCode)) !== null) {
       const {params_str} = serviceMatch.groups;
-
-      const params: ParamType[] = []
+      const params: ServiceParamType[] = []
+      const pRe = new RegExp(ServiceParser.PARAM_RE)
       let paramMatch: RegExpMatchArray
       const paramStr = (params_str || '').replace(/[\n\r]/g, '').replace(/\s+/g, ' ')
-      while ((
-        paramMatch = new RegExp(ServiceParser.ParamRe).exec(paramStr)
-      ) !== null) {
-        const p: ParamType = pick(paramMatch.groups,
+      while ((paramMatch = pRe.exec(paramStr)) !== null) {
+        const p: ServiceParamType = pick(paramMatch.groups,
           'param_type', 'param_name', 'param_annotation');
         params.push(p);
       }
@@ -74,12 +63,84 @@ const ServiceParser: ParserContructor = class ServiceParser implements IParser {
     this.services = services
   }
 
-  parse() {
+  private _renderServices(service: ServiceType) {
+    const url = `${this.controller.url}${service.url}`
+    const reqUrl = service.params.reduce((acc, param) => {
+      const {param_name, param_annotation: pa} = param;
+      const placeholder = `{${param_name}}`
+      if (pa?.includes('PathVariable') && acc.includes(placeholder)) {
+        acc = acc.replace(placeholder, `$${placeholder}`)
+      }
+      return acc
+    }, '`' + url + '`')
+    const funcName = url
+      .replace(/\/{\w+?}/g, '') // placeholder
+      .replace(/\/(\w)/g, (_, p1) => p1.toUpperCase())
+      .replace(/^\w/, m => m.toLowerCase())
+    const jsdocParams = service.params.map(param => {
+      const {param_type: pt, param_name: pn, param_annotation: pa} = param
+      const isHeader = pa?.includes('RequestHeader')
+      const isOptional = !pa || !pa.includes('@NotNull')
+      const pName = isHeader ? `headers.${pn}` : pn
+      const name = isOptional ? ` [${pName}]` : ` ${pName}`
+      return `* @param {${getJSType(pt)}} ${name}`.trim()
+    }).join('\n ').trim()
+    const mapParams = param => {
+      const {param_name: pn, param_annotation: pa} = param
+      const isHeader = pa?.includes('RequestHeader')
+      return isHeader ? null : pn
+    }
+    const funcArgs = service.params.map(mapParams).filter(Boolean).join(', ')
+    const bodyOrParams = service.params
+      .filter(({param_annotation: pa}) => !pa || !pa.includes('PathVariable'))
+      .map(mapParams)
+      .filter(Boolean)
+      .map(param => this.javaCode.includes('ResponseBody')
+        ? `...${param}`
+        : param
+      )
+      .join(',\n      ')
+    const mtd = service.method.toLowerCase()
+    const paramsKey = /(post|put|patch|delete)/.test(mtd) ? 'body' : 'params'
 
-    return {
+    return `/** ${funcName}
+ * @url ${url}
+ * @method ${mtd.toUpperCase()}
+ ${jsdocParams}
+ * @return {Promise<${getJSType(service.res)}>}\n */\n
+export function ${funcName} (${funcArgs}) {
+  return ${this.meta.jsDocServiceRequestInstanceName}({
+    url: ${reqUrl},
+    method: '${mtd}',
+    ${paramsKey}: {
+      ${bodyOrParams}
+    }
+  })
+}
+  `
+  }
+
+  private _getJSDoc() {
+    const cont = formatParagraph(
+      this.services.map(this._renderServices)
+        .join('\n')
+        .trim()
+    )
+    return `${this.meta.jsDocServiceTopImport}\n\n${cont}`
+  }
+
+  // TODO ts
+  parse(type: ParseType = 'jsdoc') {
+    const rtn: ParseResult = {
       javaPath: this.javaPath,
       result: null
     }
+
+    if (type === 'jsdoc') {
+      rtn.result = this._getJSDoc()
+    }
+
+    return rtn;
   }
 }
 
