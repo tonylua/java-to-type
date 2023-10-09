@@ -52,10 +52,10 @@ j2doc(
 )
 j2doc(
   path.resolve(javaProjPath, 'enum'),
-  path.resolve(saveToBase, 'enum'),
+  path.resolve(saveToBase, 'enum.js'),
   {isEnum: true}
 )
 j2doc(
   path.resolve(javaProjPath, 'pojo'),
-  path.resolve(saveToBase, 'pojo'),
+  path.resolve(saveToBase, 'pojo.js'),
 )
