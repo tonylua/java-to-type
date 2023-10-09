@@ -72,7 +72,7 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
         acc = acc.replace(placeholder, `$${placeholder}`)
       }
       return acc
-    }, '`' + url + '`')
+    }, '`' + (this.meta?.apiPrefix || '') + url + '`')
     const funcName = url
       .replace(/\/{\w+?}/g, '') // placeholder
       .replace(/\/(\w)/g, (_, p1) => p1.toUpperCase())
@@ -85,7 +85,7 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
       const name = isOptional ? ` [${pName}]` : ` ${pName}`
       return `* @param {${getJSType(pt)}} ${name}`.trim()
     }).join('\n ').trim()
-    const mapParams = param => {
+    const mapParams = (param: ServiceParamType) => {
       const {param_name: pn, param_annotation: pa} = param
       const isHeader = pa?.includes('RequestHeader')
       return isHeader ? null : pn

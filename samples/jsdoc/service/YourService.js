@@ -10,7 +10,7 @@ import request from '@/utils/request'
  */
 export function cccQueryById (id) {
   return request({
-    url: `/ccc/queryById/${id}`,
+    url: `/api/ccc/queryById/${id}`,
     method: 'get',
   })
 }
@@ -23,7 +23,7 @@ export function cccQueryById (id) {
  */
 export function cccMyList (info) {
   return request({
-    url: `/ccc/myList`,
+    url: `/api/ccc/myList`,
     method: 'get',
     params: {
       info
@@ -38,7 +38,7 @@ export function cccMyList (info) {
  */
 export function cccRegister (info) {
   return request({
-    url: `/ccc/register/{id}`,
+    url: `/api/ccc/register/{id}`,
     method: 'post',
     body: {
       info

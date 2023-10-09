@@ -1,0 +1,5 @@
+{
+  "javaDir": "./java",
+  "dist": "./jsdoc",
+  "apiPrefix": "/api"
+}

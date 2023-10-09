@@ -20,7 +20,8 @@ function parseJava(javaCode: string, javaPath: string, option?: ParseOption) {
   // pojo
   else if (/public\s+class\s+/.test(javaCode)) parser = PojoParser;
 
-  if (parser) return new parser(javaCode, javaPath).parse('jsdoc');
+  if (parser)
+    return new parser(javaCode, javaPath, option.parserMeta).parse('jsdoc');
   return null;
 }
 

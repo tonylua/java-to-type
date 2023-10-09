@@ -3,6 +3,7 @@
 export type ParserMeta = {
   jsDocServiceRequestInstanceName?: string;
   jsDocServiceTopImport?: string;
+  apiPrefix?: string;
 }
 
 export interface ParserContructor {
@@ -12,6 +13,7 @@ export interface ParserContructor {
 export type ParseOption = {
   isEnum?: boolean;
   isService?: boolean;
+  parserMeta?: ParserMeta;
 }
 
 export type ParseType = 'jsdoc' | 'ts'

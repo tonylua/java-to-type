@@ -4,9 +4,10 @@ const fs = require('fs')
 const path = require('path')
 const {rimrafSync} = require('rimraf')
 const {parseDir} = require('../src/index.ts')
+const config = require('./config')
 
-const javaProjPath = path.resolve(__dirname, './java')
-const saveToBase = path.resolve(__dirname, './jsdoc')
+const javaProjPath = path.resolve(__dirname, config.javaDir)
+const saveToBase = path.resolve(__dirname, config.dist)
 
 if (!fs.existsSync(javaProjPath)) {
   console.error('java目录不存在');
@@ -18,7 +19,12 @@ function j2doc(
   saveTo: string,
   option?: ParseOption,
   nameTransformer?: (name: string) => string) {
-  const parseResult: ParseResult[] = parseDir(javaDir, option);
+  const parseResult: ParseResult[] = parseDir(javaDir, {
+    parserMeta: {
+      apiPrefix: config.apiPrefix
+    },
+    ...option
+  });
   const relDirPath = path.relative(__dirname, javaDir);
   const isSaveToDir = !/\.js$/.test(saveTo);
   let cont = `// 内容自动生成，来自${relDirPath}\n\n`
