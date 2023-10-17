@@ -1,8 +1,19 @@
 {
-  "name": "j2type",
+  "name": "@tonylua/java-to-type",
   "version": "0.0.1",
   "description": "trans java pojo / enum / spring service to jsdoc / typescript",
   "main": "dist/j2type.js",
+  "keywords": [
+    "java",
+    "jsdoc",
+    "typescript"
+  ],
+  "author": "tonylua",
+  "homepage": "https://github.com/tonylua/java-to-type",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonylua/java-to-type.git"
+  },
   "scripts": {
     "build": "shell-exec --colored-output \"rm -rf dist\" \"microbundle -i src/index.ts -o dist/j2type.js --no-pkg-main -f umd --generateTypes false\"",
     "test:examples": "npx ts-node samples/buildJSDoc.ts"
