@@ -2,26 +2,30 @@ import type {ParseOption, ParseResult, ParserContructor} from "./types/Parser";
 import ServiceParser from "./parsers/ServiceParser";
 import EnumParser from "./parsers/EnumParser";
 import PojoParser from "./parsers/PojoParser";
-
+import {readJava} from "./utils/file";
 const fs = require("fs");
 const path = require("path");
-const {readJava} = require("./utils/file");
 
 // TODO 匹配更多特征
 // TODO 特征放在外部配置文件中
 function parseJava(javaCode: string, javaPath: string, option?: ParseOption) {
-  let parser: ParserContructor;
+  let Parser: ParserContructor | null = null;
   // service
   if (option?.isService || /@RestController/.test(javaCode))
-    parser = ServiceParser;
+    Parser = ServiceParser;
   // enum
   else if (option?.isEnum || /public\s+enum\s+/.test(javaCode))
-    parser = EnumParser;
+    Parser = EnumParser;
   // pojo
-  else if (/public\s+class\s+/.test(javaCode)) parser = PojoParser;
+  else if (/public\s+class\s+/.test(javaCode)) Parser = PojoParser;
 
-  if (parser)
-    return new parser(javaCode, javaPath, option.parserMeta).parse('jsdoc');
+  if (Parser)
+    return new Parser(
+      javaCode,
+      javaPath,
+      option?.parserMeta
+    ).parse('jsdoc');
+
   return null;
 }
 

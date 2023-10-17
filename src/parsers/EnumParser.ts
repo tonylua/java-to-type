@@ -32,7 +32,7 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
   private _getEnumName() {
     const cRe = new RegExp(EnumParser.ENUM_RE)
     const classMatch: RegExpMatchArray = cRe.exec(this.javaCode);
-    this.enumName = classMatch?.groups?.enum_name;
+    this.enumName = classMatch[1] // classMatch?.groups?.enum_name;
   }
 
   private _getProperties() {
@@ -40,7 +40,12 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
     const pRe = new RegExp(EnumParser.PROPERTY_RE)
     let propertyMatch: RegExpMatchArray;
     while ((propertyMatch = pRe.exec(this.javaCode)) !== null) {
-      const p: EnumProperty = pick(propertyMatch.groups, 'desc', 'key', 'value')
+      // const p: EnumProperty = pick(propertyMatch.groups, 'desc', 'key', 'value')
+      const p: EnumProperty = {
+        key: propertyMatch[1],
+        value: propertyMatch[2],
+        desc: propertyMatch[3]
+      }
       p.type = /["']+/.test(p.value) ? 'String' : 'Number'
       properties.push(p)
     }

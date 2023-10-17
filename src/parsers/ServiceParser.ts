@@ -35,8 +35,9 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
 
   private _getController() {
     const match = new RegExp(ServiceParser.CONTROLLER_RE).exec(this.javaCode)
-    if (!match?.groups) throw new Error('invalid controller')
-    this.controller = pick(match.groups, 'url', 'name');
+    if (!match) throw new Error('invalid controller')
+    // https://github.com/microsoft/TypeScript/issues/36132#issuecomment-573141594
+    this.controller = {url: match[1], name: match[2]} // pick(match.groups, 'url', 'name');
   }
 
   private _getServices() {
@@ -44,19 +45,30 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
     const sRe = new RegExp(ServiceParser.SERVICE_RE)
     let serviceMatch: RegExpMatchArray;
     while ((serviceMatch = sRe.exec(this.javaCode)) !== null) {
-      const {params_str} = serviceMatch.groups;
+      // const {params_str} = serviceMatch.groups;
+      const params_str = serviceMatch[6];
       const params: ServiceParamType[] = []
       const pRe = new RegExp(ServiceParser.PARAM_RE)
       let paramMatch: RegExpMatchArray
       const paramStr = (params_str || '').replace(/[\n\r]/g, '').replace(/\s+/g, ' ')
       while ((paramMatch = pRe.exec(paramStr)) !== null) {
-        const p: ServiceParamType = pick(paramMatch.groups,
-          'param_type', 'param_name', 'param_annotation');
+        // const p: ServiceParamType = pick(paramMatch.groups,
+        //   'param_type', 'param_name', 'param_annotation');
+        const p: ServiceParamType = {
+          param_annotation: paramMatch[1],
+          param_type: paramMatch[2],
+          param_name: paramMatch[3],
+        }
         params.push(p);
       }
       const s: ServiceType = {
         params,
-        ...pick(serviceMatch.groups, 'desc', 'method', 'url', 'res', 'name')
+        // ...pick(serviceMatch.groups, 'desc', 'method', 'url', 'res', 'name')
+        desc: serviceMatch[1],
+        method: serviceMatch[2],
+        url: serviceMatch[3],
+        res: serviceMatch[4],
+        name: serviceMatch[5],
       };
       services.push(s);
     }

@@ -1,4 +1,12 @@
 {
+  "name": "j2type",
+  "version": "0.0.1",
+  "description": "trans java pojo / enum / spring service to jsdoc / typescript",
+  "main": "dist/j2type.js",
+  "scripts": {
+    "build": "shell-exec --colored-output \"rm -rf dist\" \"microbundle -i src/index.ts -o dist/j2type.js --no-pkg-main -f umd --generateTypes false\"",
+    "test:examples": "npx ts-node samples/buildJSDoc.ts"
+  },
   "devDependencies": {
     "@types/node": "^20.8.3",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -6,7 +14,9 @@
     "eslint": "^8.51.0",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-prettier": "^5.0.0",
+    "microbundle": "^0.15.1",
     "prettier": "^3.0.3",
+    "shell-executor": "^6.0.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports.readJava = (filePath: string) => {
+export const readJava = (filePath: string) => {
   try {
     return fs.readFileSync(filePath, "utf8");
   } catch (ex) {

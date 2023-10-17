@@ -33,7 +33,7 @@ const PojoParser: ParserContructor = class PojoParser extends BaseParser {
   private _getClassName() {
     const cRe = new RegExp(PojoParser.CLASS_RE)
     const classMatch: RegExpMatchArray = cRe.exec(this.javaCode);
-    this.className = classMatch?.groups?.class_name;
+    this.className = classMatch[1] // classMatch?.groups?.class_name;
   }
 
   private _getProperties() {
@@ -42,7 +42,10 @@ const PojoParser: ParserContructor = class PojoParser extends BaseParser {
     let propertyMatch: RegExpMatchArray;
     while ((propertyMatch = pRe.exec(this.javaCode)) !== null) {
       const p: PojoProperty = {
-        ...pick(propertyMatch.groups, 'desc', 'type', 'name'),
+        // ...pick(propertyMatch.groups, 'desc', 'type', 'name'),
+        desc: propertyMatch[1],
+        type: propertyMatch[2],
+        name: propertyMatch[3],
         isOptional: !propertyMatch[0].includes('@NotNull')
       }
       properties.push(p)

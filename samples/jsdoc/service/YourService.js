@@ -2,46 +2,36 @@
 
 import request from '@/utils/request'
 
-/** cccQueryById
- * @url /ccc/queryById/{id}
- * @method GET
- * @param {Integer}  [id]
- * @return {Promise<BasicInfo>}
+/** cccGet
+ * @url /ccc/Get
+ * @method 通过竹简查询
+ * @return {Promise</queryById/{id}>}
  */
-export function cccQueryById (id) {
+export function cccGet () {
   return request({
-    url: `/api/ccc/queryById/${id}`,
-    method: 'get',
+    url: `/api/ccc/Get`,
+    method: '通过竹简查询',
   })
 }
-/** cccMyList
- * @url /ccc/myList
- * @method GET
- * @param {String}  [headers.code]
- * @param {MyInfo}  [info]
- * @return {Promise<PageInfo<BasicInfo>>}
+/** cccGet
+ * @url /ccc/Get
+ * @method 查询我的
+ * @return {Promise</myList>}
  */
-export function cccMyList (info) {
+export function cccGet () {
   return request({
-    url: `/api/ccc/myList`,
-    method: 'get',
-    params: {
-      info
-    }
+    url: `/api/ccc/Get`,
+    method: '查询我的',
   })
 }
-/** cccRegister
- * @url /ccc/register/{id}
- * @method POST
- * @param {MyInfo}  [info]
- * @return {Promise<Map<String, Object>>}
+/** cccPost
+ * @url /ccc/Post
+ * @method 注册
+ * @return {Promise</register/{id}>}
  */
-export function cccRegister (info) {
+export function cccPost () {
   return request({
-    url: `/api/ccc/register/{id}`,
-    method: 'post',
-    body: {
-      info
-    }
+    url: `/api/ccc/Post`,
+    method: '注册',
   })
 }

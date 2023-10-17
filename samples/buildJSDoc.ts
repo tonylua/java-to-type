@@ -3,8 +3,8 @@ import type {ParseResult, ParseOption} from '../src/types/Parser.d.ts'
 const fs = require('fs')
 const path = require('path')
 const {rimrafSync} = require('rimraf')
-const {parseDir} = require('../src/index.ts')
 const config = require('./config')
+const {parseDir} = require('../dist/j2type.js')
 
 const javaProjPath = path.resolve(__dirname, config.javaDir)
 const saveToBase = path.resolve(__dirname, config.dist)

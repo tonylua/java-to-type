@@ -1,1 +1,2 @@
-npx ts-node samples/buildJSDoc.ts
+- npm run build
+- npm run test:examples
