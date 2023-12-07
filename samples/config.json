@@ -1,5 +1,6 @@
 {
   "javaDir": "./java",
   "dist": "./jsdoc",
+  "dist2": "./jsdocWithTS",
   "apiPrefix": "/api"
 }

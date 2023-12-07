@@ -7,7 +7,7 @@ const config = require('./config')
 const { parseDir } = require('../dist/j2type.js')
 
 const javaProjPath = path.resolve(__dirname, config.javaDir)
-const saveToBase = path.resolve(__dirname, config.dist)
+const saveToBase = path.resolve(__dirname, config.dist2)
 
 if (!fs.existsSync(javaProjPath)) {
   console.error('java目录不存在')
@@ -22,14 +22,17 @@ function j2doc(
     prepandContent?: string
   },
 ) {
+  const { parserMeta, ...restOption } = option || {}
   const parseResult: ParseResult[] = parseDir(javaDir, {
     parserMeta: {
       apiPrefix: config.apiPrefix,
+      outputTS: true,
+      ...parserMeta,
     },
-    ...option,
+    ...restOption,
   })
   const relDirPath = path.relative(__dirname, javaDir)
-  const isSaveToDir = !/\.js$/.test(saveTo)
+  const isSaveToDir = !/\.(t|j)s$/.test(saveTo)
   const prepand = option?.prepandContent ? `\n${option.prepandContent}` : ''
   let cont = `// 内容自动生成，来自${relDirPath}${prepand}\n\n`
   if (isSaveToDir) {
@@ -55,18 +58,26 @@ function j2doc(
 if (fs.existsSync(saveToBase)) rimrafSync(saveToBase)
 fs.mkdirSync(saveToBase)
 
-j2doc(path.resolve(javaProjPath, 'enum'), path.resolve(saveToBase, 'enum.js'), {
+const enumDir = path.resolve(javaProjPath, 'enum')
+const pojoDir = path.resolve(javaProjPath, 'pojo')
+const srvDir = path.resolve(javaProjPath, 'service')
+const enumDts = path.resolve(saveToBase, 'enum.d.ts')
+const pojoDts = path.resolve(saveToBase, 'pojo.d.ts')
+const srvDist = path.resolve(saveToBase, 'service')
+j2doc(enumDir, enumDts, {
   isEnum: true,
 })
-j2doc(path.resolve(javaProjPath, 'pojo'), path.resolve(saveToBase, 'pojo.js'))
-
-j2doc(
-  path.resolve(javaProjPath, 'service'),
-  path.resolve(saveToBase, 'service'),
-  {
-    isService: true,
-    nameTransformer: name => name.replace('My', 'Your') + '.js',
-    prepandContent: `
+j2doc(pojoDir, pojoDts)
+j2doc(srvDir, srvDist, {
+  isService: true,
+  parserMeta: {
+    serviceMeta: {
+      [pojoDir]: path.relative(srvDist, pojoDts),
+      [enumDir]: path.relative(srvDist, enumDts),
+    },
+  },
+  nameTransformer: name => name.replace('My', 'Our') + '.js',
+  prepandContent: `
 /**
  * @typedef {Object} PageInfo
  * @property {Array.<T>} list
@@ -76,5 +87,4 @@ j2doc(
  * @template T
  */
 `,
-  },
-)
+})

@@ -69,7 +69,7 @@ public class AbcdController extends XXController {
    * @return 
    */
    @PostMapping(value = "/insert", ppp = PPPP.CC_C)
-   public Integer insert(@RequestBody SomeCategory someCategory) 
+   public Integer insert(@RequestBody SomeCategory someCategory, Color color) 
   {
     return xxx;
   }

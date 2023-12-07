@@ -1,4 +1,5 @@
 `npm i -D @tonylua/java-to-type`
 
 - npm run build
-- npm run test:examples
+- npm run examples
+- npm run examples:withTS

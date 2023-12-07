@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "shell-exec --colored-output \"rm -rf dist\" \"microbundle -i src/index.ts -o dist/j2type.js --no-pkg-main -f umd --generateTypes false\"",
-    "test:examples": "npx ts-node samples/buildJSDoc.ts"
+    "examples": "npx ts-node samples/buildJSDoc.ts",
+    "examples:withTS": "npx ts-node samples/buildJSDocWithTS.ts"
   },
   "devDependencies": {
     "@types/node": "^20.8.3",

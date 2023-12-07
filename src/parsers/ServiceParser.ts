@@ -1,5 +1,4 @@
-import { pick } from '../utils/object'
-import { getJSType } from '../utils/type'
+import { getOrImportType } from '../utils/type'
 import { formatParagraph } from '../utils/text'
 import type {
   ParserMeta,
@@ -17,7 +16,7 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
     /@RestController\s*\n\s*@RequestMapping\(\"(?<url>[\w\/_-{}:]+?)\"\)\s*\npublic\s+class\s+(?<name>\w+?)Controller\s+/g
 
   static SERVICE_RE =
-    /(\/\*{2}\n\s+\*\s+(?<desc>[^@\s]*?)\n(?:[\s\S]+?))?@(?:(?<method>Get|Post|Update|Put|Delete)?)Mapping\(\s*(?:value\s*=\s*)?"(?<url>[\w\/_-{}:]+?)\".*?\)(?:[\s\S]+?)public\s+(?<res>[\w<>_[\](,\s)]+?)\s+(?<name>[\w_-]+?)\((?<params_str>[\s\S]+?)?\)?\s*{/gi
+    /(\/\*{2}\n\s+\*\s+(?<desc>[^@\s]*?)\n(?:[\s\S]+?))?@(?:(?<method>Get|Post|Update|Put|Delete)?)Mapping\(\s*(?:value\s*=\s*)?"(?<url>[\w\/_-{}:]+?)\".*?\)(?:[\s\S]+?)public\s+(?<res>[\w<>_[\](,\s)]+?)\s+(?<name>[\w_-]+?)\((?<params_str>[\s\S]*?)t\)?\s*{/gi
 
   static PARAM_RE =
     /(?<param_annotation>@.*?\s)?(?<param_type>[\w<>_[\](,\s)]+?)\s+(?<param_name>\w+)(?:,\s*)?/g
@@ -45,13 +44,15 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
     let serviceMatch: RegExpMatchArray
     while ((serviceMatch = sRe.exec(this.javaCode)) !== null) {
       // const {params_str} = serviceMatch.groups;
-      const params_str = serviceMatch[6]
+      // console.log(Array.from(serviceMatch))
+      const params_str = serviceMatch[7]
       const params: ServiceParamType[] = []
       const pRe = new RegExp(ServiceParser.PARAM_RE)
       let paramMatch: RegExpMatchArray
       const paramStr = (params_str || '')
         .replace(/[\n\r]/g, '')
         .replace(/\s+/g, ' ')
+      // console.log(333, params_str, paramStr)
       while ((paramMatch = pRe.exec(paramStr)) !== null) {
         // const p: ServiceParamType = pick(paramMatch.groups,
         //   'param_type', 'param_name', 'param_annotation');
@@ -102,7 +103,7 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
         const isOptional = !pa || !pa.includes('@NotNull')
         const pName = isHeader ? `headers.${pn}` : pn
         const name = isOptional ? ` [${pName}]` : ` ${pName}`
-        return `* @param {${getJSType(pt)}} ${name}`.trim()
+        return `* @param {${getOrImportType(pt, this.meta)}} ${name}`.trim()
       })
       .join('\n ')
       .trim()
@@ -119,7 +120,7 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
       .map(param =>
         this.javaCode.includes('ResponseBody') ? `...${param}` : param,
       )
-    console.log(service.name, service.method)
+    // console.log(service.name, service.method)
 
     let mtd = service.method.toLowerCase()
     const paramsKey = /(post|put|patch|delete)/.test(mtd) ? 'body' : 'params'
@@ -133,7 +134,7 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
  * @url ${url}
  * @method ${mtd.toUpperCase()}
  ${jsdocParams}
- * @return {Promise<${getJSType(service.res)}>}\n */\n
+ * @return {Promise<${getOrImportType(service.res, this.meta)}>}\n */\n
 export function ${funcName} (${funcArgs}) {
   return ${this.meta.jsDocServiceRequestInstanceName}({
     url: ${reqUrl},
