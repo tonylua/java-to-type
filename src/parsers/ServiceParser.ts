@@ -13,10 +13,10 @@ import BaseParser from './BaseParser'
 
 const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
   static CONTROLLER_RE =
-    /@RestController\s*\n\s*@RequestMapping\(\"(?<url>[\w\/_-{}:]+?)\"\)\s*\npublic\s+class\s+(?<name>\w+?)Controller\s+/g
+    /@RestController\s*\n\s*@RequestMapping\(\"(?<url>[\w\/_-{}:]+?)\"\)[\s\S]*?\npublic\s+class\s+(?<name>\w+?)Controller\s+/g
 
   static SERVICE_RE =
-    /(\/\*{2}\n\s+\*\s+(?<desc>[^@\s]*?)\n(?:[\s\S]+?))?@(?:(?<method>Get|Post|Update|Put|Delete)?)Mapping\(\s*(?:value\s*=\s*)?"(?<url>[\w\/_-{}:]+?)\".*?\)(?:[\s\S]+?)public\s+(?<res>[\w<>_[\](,\s)]+?)\s+(?<name>[\w_-]+?)\((?<params_str>[\s\S]*?)t\)?\s*{/gi
+    /(\/\*{2}\n\s+\*\s+(?<desc>[^@\s]*?)\n(?:[\s\S]+?))?@(?:(?<method>Get|Post|Update|Put|Delete)?)Mapping\(\s*(?:value\s*=\s*)?"(?<url>[\w\/_-{}:]+?)\".*?\)(?:[\s\S]+?)public\s+(?<res>[\w<>_[\](,\s)]+?)\s+(?<name>[\w_-]+?)\((?<params_str>[\s\S]*)\)?\s*{/gi
 
   static PARAM_RE =
     /(?<param_annotation>@.*?\s)?(?<param_type>[\w<>_[\](,\s)]+?)\s+(?<param_name>\w+)(?:,\s*)?/g

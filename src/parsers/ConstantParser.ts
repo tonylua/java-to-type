@@ -9,14 +9,15 @@ import type {
 } from '../types/Parser'
 import BaseParser from './BaseParser'
 
-const EnumParser: ParserContructor = class EnumParser extends BaseParser {
-  static ENUM_RE = /public\s+enum\s+(?<enum_name>\w+)/g
+// eslint-disable-next-line max-len
+const ConstantParser: ParserContructor = class ConstantParser extends BaseParser {
+  static ENUM_RE = /public\s+class\s+(?<enum_name>\w+)/g
 
   static PROPERTY_RE =
-    /(?<key>[A-Z_]+?)(?:\((?<value>\S+?)\s*(?:,\s*(?<desc>\S+?))?\))?[,;]/gm
+    /(?:\s*\/\*{2}\n\s*\*\s+([^@\s]+?)\n[\s\S]+?)?public\sstatic\sfinal\s([\w<>[\]]+)\s+([\w_]+)\s*=\s*(("|[^\s;$])+);?/g
 
   static toString() {
-    return 'EnumParser'
+    return 'ConstantParser'
   }
 
   private enumName: string
@@ -30,23 +31,22 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
   }
 
   private _getEnumName() {
-    const cRe = new RegExp(EnumParser.ENUM_RE)
+    const cRe = new RegExp(ConstantParser.ENUM_RE)
     const classMatch: RegExpMatchArray = cRe.exec(this.javaCode)
-    this.enumName = classMatch?.[1] // classMatch?.groups?.enum_name;
+    this.enumName = classMatch[1] // classMatch?.groups?.enum_name;
   }
 
   private _getProperties() {
     const properties: EnumProperty[] = []
-    const pRe = new RegExp(EnumParser.PROPERTY_RE)
+    const pRe = new RegExp(ConstantParser.PROPERTY_RE)
     let propertyMatch: RegExpMatchArray
     while ((propertyMatch = pRe.exec(this.javaCode)) !== null) {
-      // const p: EnumProperty = pick(propertyMatch.groups, 'desc', 'key', 'value')
       const p: EnumProperty = {
-        key: propertyMatch[1],
-        value: propertyMatch[2],
-        desc: propertyMatch[3],
+        desc: propertyMatch[1],
+        type: propertyMatch[2],
+        key: propertyMatch[3],
+        value: propertyMatch[4],
       }
-      p.type = /["']+/.test(p.value) ? 'String' : 'Number'
       properties.push(p)
     }
     this.properties = properties
@@ -55,10 +55,10 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
   private _getJSDocWithTS() {
     if (!this.properties.length) return ''
     const enumType = getJSType(this.properties[0].type, this.meta.outputTS)
-    let result = new RegExp(EnumParser.PROPERTY_RE).test(this.javaCode)
+    let result = new RegExp(ConstantParser.PROPERTY_RE).test(this.javaCode)
       ? this.properties
           .map((prop, propIdx) => {
-            const { desc, key, value, type } = prop
+            const { desc, key, value } = prop
             const pVlu = value ? ` = ${replaceQuote(value, `'`)}` : ``
             const pDesc = desc ? `// ${replaceQuote(desc)}` : ``
             return '  ' + `${key}${pVlu}, ${pDesc}`.trim()
@@ -74,10 +74,10 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
   private _getJSDoc() {
     if (!this.properties.length) return ''
     const enumType = getJSType(this.properties[0].type)
-    let result = new RegExp(EnumParser.PROPERTY_RE).test(this.javaCode)
+    let result = new RegExp(ConstantParser.PROPERTY_RE).test(this.javaCode)
       ? this.properties
           .map((prop, propIdx) => {
-            const { desc, key, value, type } = prop
+            const { desc, key, value } = prop
             const pVlu = value
               ? `: ${replaceQuote(value, `'`)}`
               : `: ${propIdx}`
@@ -109,4 +109,4 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
   }
 }
 
-export default EnumParser
+export default ConstantParser

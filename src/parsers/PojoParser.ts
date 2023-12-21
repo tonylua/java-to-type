@@ -1,4 +1,3 @@
-import { pick } from '../utils/object'
 import { getJSType } from '../utils/type'
 import { formatParagraph } from '../utils/text'
 import type {

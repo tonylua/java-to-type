@@ -41,4 +41,13 @@ export const MyEnum = {
   VALUEA: '1', // 规划中
   VALUE_B: '2', // 333
   VALUEC: '3', // sss
+}
+
+/**
+ * @readonly
+ * @enum {String}
+ */
+export const StaticMems = {
+  ABC_ABC: 'abc_abc',
+  DEF_DEF: 'def_def',
 }

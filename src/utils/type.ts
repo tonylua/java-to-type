@@ -34,8 +34,8 @@ export const getJSType = function getJSType(
 }
 
 export function getOrImportType(javaType: string, parserMeta: ParserMeta) {
-  const serviceMeta = parserMeta.serviceMeta
-  let t = getJSType(javaType, parserMeta.outputTS)
+  const serviceMeta = parserMeta?.serviceMeta
+  let t = getJSType(javaType, parserMeta?.outputTS)
 
   const arrMatch = /^(.*?)(\[\])+$/.exec(t)
   if (arrMatch) return getOrImportType(arrMatch[1], serviceMeta) + arrMatch[2]

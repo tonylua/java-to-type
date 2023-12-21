@@ -25,4 +25,9 @@ export enum MyEnum {
   VALUEA = '1', // 规划中
   VALUE_B = '2', // 333
   VALUEC = '3', // sss
+}
+
+export enum StaticMems {
+  ABC_ABC = 'abc_abc',
+  DEF_DEF = 'def_def',
 }
