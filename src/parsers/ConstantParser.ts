@@ -16,8 +16,9 @@ const ConstantParser: ParserContructor = class ConstantParser extends BaseParser
   static PROPERTY_RE =
     /(?:\s*\/\*{2}\n\s*\*\s+([^@\s]+?)\n[\s\S]+?)?public\sstatic\sfinal\s([\w<>[\]]+)\s+([\w_]+)\s*=\s*(("|[^\s;$])+);?/g
 
-  static toString() {
-    return 'ConstantParser'
+  static match(code: string) {
+    const { ENUM_RE, PROPERTY_RE } = ConstantParser
+    return new RegExp(ENUM_RE).test(code) && new RegExp(PROPERTY_RE).test(code)
   }
 
   private enumName: string

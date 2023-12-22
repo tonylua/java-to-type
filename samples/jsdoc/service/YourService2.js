@@ -18,7 +18,7 @@ import request from '@/utils/request'
  * @param { return}  [xxx]
  * @param {PPPP)}  [public]
  * @param { BasicInfo}  [findById]
- * @param {Integer}  [id]
+ * @param {Number}  [id]
  * @param { return}  [xxx]
  * @param {PPPP)}  [public]
  * @param { PageInfo<BasicInfo>}  [myList]

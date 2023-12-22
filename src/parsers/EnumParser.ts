@@ -15,8 +15,9 @@ const EnumParser: ParserContructor = class EnumParser extends BaseParser {
   static PROPERTY_RE =
     /(?<key>[A-Z_]+?)(?:\((?<value>\S+?)\s*(?:,\s*(?<desc>\S+?))?\))?[,;]/gm
 
-  static toString() {
-    return 'EnumParser'
+  static match(code: string) {
+    const { ENUM_RE, PROPERTY_RE } = EnumParser
+    return new RegExp(ENUM_RE).test(code) && new RegExp(PROPERTY_RE).test(code)
   }
 
   private enumName: string

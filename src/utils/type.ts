@@ -28,7 +28,7 @@ export const getJSType = function getJSType(
     // return `${getJSType(m.groups.itemType)}[]`;
     return `${getJSType(m[1], isTypescript)}[]`
   }
-  const mapped = TypeMap[javaType.toLowerCase()]
+  const mapped = TypeMap[javaType] || TypeMap[javaType.toLowerCase()]
   if (mapped) return isTypescript ? mapped.toLowerCase() : mapped
   return javaType
 }

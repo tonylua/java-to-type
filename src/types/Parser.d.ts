@@ -10,6 +10,7 @@ export type ParserMeta = {
 
 export interface ParserContructor {
   new (javaCode: string, javaPath: string, meta?: ParserMeta): IParser
+  match: (code: string) => boolean
 }
 
 export type ParseOption = {

@@ -28,6 +28,7 @@ function j2doc(
     },
     ...option,
   })
+  if (!parseResult?.length) return
   const relDirPath = path.relative(__dirname, javaDir)
   const isSaveToDir = !/\.js$/.test(saveTo)
   const prepand = option?.prepandContent ? `\n${option.prepandContent}` : ''

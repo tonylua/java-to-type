@@ -21,6 +21,13 @@ const ServiceParser: ParserContructor = class ServiceParser extends BaseParser {
   static PARAM_RE =
     /(?<param_annotation>@.*?\s)?(?<param_type>[\w<>_[\](,\s)]+?)\s+(?<param_name>\w+)(?:,\s*)?/g
 
+  static match(code: string) {
+    const { CONTROLLER_RE, SERVICE_RE } = ServiceParser
+    return (
+      new RegExp(CONTROLLER_RE).test(code) && new RegExp(SERVICE_RE).test(code)
+    )
+  }
+
   private controller: ControllerType
   private services: ServiceType[]
 

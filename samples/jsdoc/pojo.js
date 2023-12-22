@@ -2,6 +2,6 @@
 
 /**
  * @typedef {Object} MyPojo
- * @property {Integer}  [id]
+ * @property {Number}  [id]
  * @property {String}  [name]
 */

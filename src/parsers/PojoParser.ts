@@ -16,6 +16,11 @@ const PojoParser: ParserContructor = class PojoParser extends BaseParser {
   static PROPERTY_RE =
     /(?:\s*\/\*{2}\s*\n\s*\*\s+(?<desc>(?:[^@].)+?)[\s\S]*?)?private\s+(?<type>[\w<>[\]]+)\s+(?<name>\w+);/g
 
+  static match(code: string) {
+    const { CLASS_RE, PROPERTY_RE } = PojoParser
+    return new RegExp(CLASS_RE).test(code) && new RegExp(PROPERTY_RE).test(code)
+  }
+
   private className: string
   private properties: PojoProperty[]
 
