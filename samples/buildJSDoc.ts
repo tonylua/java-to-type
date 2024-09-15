@@ -14,6 +14,8 @@ if (!fs.existsSync(javaProjPath)) {
   process.exit(1)
 }
 
+// TODO confirm del
+
 function j2doc(
   javaDir: string,
   saveTo: string,
