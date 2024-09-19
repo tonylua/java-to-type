@@ -14,7 +14,7 @@ const PojoParser: ParserContructor = class PojoParser extends BaseParser {
 
   // TODO 判断是否只读
   static PROPERTY_RE =
-    /(?:\s*\/\*{2}\s*\n\s*\*\s+(?<desc>(?:[^@].)+?)[\s\S]*?)?private\s+(?<type>[\w<>[\]]+)\s+(?<name>\w+);/g
+    /(?:\s*\/\*{2}\s*\n\s*\*\s+(?<desc>(?:[^@].+)?)[\s\S]*?)?private\s+(?<type>[\w<>[\]]+)\s+(?<name>\w+);/g
 
   static match(code: string) {
     const { CLASS_RE, PROPERTY_RE } = PojoParser
