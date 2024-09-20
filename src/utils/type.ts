@@ -14,6 +14,8 @@ const TypeMap = {
   'long': 'Number',
   'float': 'Number',
   'double': 'Number',
+  'BigDecimal': 'Number',
+  'BigInteger': 'BigInt'
 }
 
 // https://github.com/microsoft/TypeScript/issues/36132#issuecomment-573141594
