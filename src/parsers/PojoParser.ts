@@ -12,9 +12,8 @@ import BaseParser from './BaseParser'
 const PojoParser: ParserContructor = class PojoParser extends BaseParser {
   static CLASS_RE = /public\s+class\s+(?<class_name>\w+)/g
 
-  // TODO 判断是否只读
-  static PROPERTY_RE =
-    /(?:\s*\/\*{2}\s*\n\s*\*\s+(?<desc>(?:[^@].+)?)[\s\S]*?)?private\s+(?<type>[\w<>[\]]+)\s+(?<name>\w+);/g
+  // TODO 通过 getter/setter 判断是否只读? springboot @data注解?
+  static PROPERTY_RE = /(?:\n(?:[^\n\S]|\t)+\/\*{2}\s*\n\s*\*\s+(?<desc>(?:[^@].+)?)[\s\S]*?)?private\s+(?<type>[\w<>[\]]+)\s+(?<name>\w+);/g 
 
   static match(code: string) {
     const { CLASS_RE, PROPERTY_RE } = PojoParser
