@@ -28,7 +28,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "microbundle": "^0.15.1",
     "prettier": "^3.0.3",
-    "shell-executor": "^6.0.1",
+    "shell-executor": "^0.3.2",
     "typescript": "^5.2.2"
   },
   "dependencies": {
