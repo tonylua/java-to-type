@@ -26,7 +26,7 @@ function parseJava(javaCode: string, javaPath: string, option?: ParseOption) {
   else if (PojoParser.match(javaCode)) Parser = PojoParser
   if (!Parser) return null
 
-  return new Parser(javaCode, javaPath, option?.parserMeta).parse('jsdoc')
+  return new Parser(javaCode, javaPath, option?.parserMeta).parse()
 }
 
 function parseDir(dirPath: string, option?: ParseOption) {

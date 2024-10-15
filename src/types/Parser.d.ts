@@ -19,10 +19,10 @@ export type ParseOption = {
   parserMeta?: ParserMeta
 }
 
-export type ParseType = 'jsdoc' | 'ts'
+// export type ParseType = 'jsdoc' | 'ts'
 
 export interface IParser {
-  parse?: (type: ParseType) => { result: string; javaPath: string }
+  parse?: () => { result: string; javaPath: string }
 }
 
 export type ParseResult = ReturnType<IParser['parse']>

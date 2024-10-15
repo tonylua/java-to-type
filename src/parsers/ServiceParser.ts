@@ -6,7 +6,6 @@ import type {
   ControllerType,
   ServiceType,
   ServiceParamType,
-  ParseType,
   ParseResult,
 } from '../types/Parser'
 import BaseParser from './BaseParser'
@@ -159,16 +158,16 @@ export function ${funcName} (${funcArgs}) {
     return `${this.meta.jsDocServiceTopImport}\n\n${cont}`
   }
 
-  // TODO ts
-  parse(type: ParseType = 'jsdoc') {
+  parse() {
     const rtn: ParseResult = {
       javaPath: this.javaPath,
       result: null,
     }
+    // TODO ts
+    if (this.meta.outputTS) 
+      throw new Error('ServiceParser with outputTS not support now')
 
-    if (type === 'jsdoc') {
-      rtn.result = this._getJSDoc()
-    }
+    rtn.result = this._getJSDoc()
 
     return rtn
   }

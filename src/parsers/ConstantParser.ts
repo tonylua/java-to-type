@@ -3,7 +3,6 @@ import { formatParagraph, replaceQuote } from '../utils/text'
 import type {
   ParserMeta,
   ParserContructor,
-  ParseType,
   ParseResult,
   EnumProperty,
 } from '../types/Parser'
@@ -93,18 +92,15 @@ const ConstantParser: ParserContructor = class ConstantParser extends BaseParser
     return formatParagraph(result)
   }
 
-  // TODO ts
-  parse(type: ParseType = 'jsdoc') {
+  parse() {
     const rtn: ParseResult = {
       javaPath: this.javaPath,
       result: null,
     }
 
-    if (type === 'jsdoc') {
-      rtn.result = this.meta.outputTS
-        ? this._getJSDocWithTS()
-        : this._getJSDoc()
-    }
+    rtn.result = this.meta.outputTS
+      ? this._getJSDocWithTS()
+      : this._getJSDoc()
 
     return rtn
   }

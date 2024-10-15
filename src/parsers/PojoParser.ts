@@ -3,7 +3,6 @@ import { formatParagraph } from '../utils/text'
 import type {
   ParserMeta,
   ParserContructor,
-  ParseType,
   ParseResult,
   PojoProperty,
 } from '../types/Parser'
@@ -87,18 +86,15 @@ const PojoParser: ParserContructor = class PojoParser extends BaseParser {
     return formatParagraph(result)
   }
 
-  // TODO ts
-  parse(type: ParseType = 'jsdoc') {
+  parse() {
     const rtn: ParseResult = {
       javaPath: this.javaPath,
       result: null,
     }
 
-    if (type === 'jsdoc') {
-      rtn.result = this.meta.outputTS
-        ? this._getJSDocWithTS()
-        : this._getJSDoc()
-    }
+    rtn.result = this.meta.outputTS
+      ? this._getJSDocWithTS()
+      : this._getJSDoc()
 
     return rtn
   }

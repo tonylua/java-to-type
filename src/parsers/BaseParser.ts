@@ -2,7 +2,6 @@ import { DefaultParserMeta } from '../utils/constants'
 import type {
   IParser,
   ParserMeta,
-  ParseType,
   ParseResult,
 } from '../types/Parser'
 
@@ -21,7 +20,7 @@ abstract class BaseParser implements IParser {
     return this
   }
 
-  abstract parse(type: ParseType): ParseResult
+  abstract parse(): ParseResult
 }
 
 export default BaseParser
