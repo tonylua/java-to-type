@@ -11,22 +11,65 @@ global.dtsCache = {}
 
 // TODO 匹配更多特征
 // TODO 特征放在外部配置文件中?
-function parseJava(javaCode: string, javaPath: string, option?: ParseOption) {
-  let Parser: ParserContructor | null = null
-  // service
-  if (ServiceParser.match(javaCode)) Parser = ServiceParser
-  // enum
-  else if (option?.isEnum)
-    Parser = EnumParser.match(javaCode)
-      ? EnumParser
-      : ConstantParser.match(javaCode)
-      ? ConstantParser
-      : null
-  // pojo
-  else if (PojoParser.match(javaCode)) Parser = PojoParser
-  if (!Parser) return null
+function parseJava(
+  javaCode: string,
+  javaPath: string,
+  option?: ParseOption,
+): ParseResult[] | null {
+  let Parsers: Array<ParserContructor | null> = []
+  let code: string = javaCode
+  const results: ParseResult[] = []
 
-  return new Parser(javaCode, javaPath, option?.parserMeta).parse()
+  // service
+  if (ServiceParser.match(code)) {
+    Parsers.push(ServiceParser)
+  }
+  // enum
+  else if (option?.isEnum) {
+    Parsers.push(
+      EnumParser.match(code)
+        ? EnumParser
+        : ConstantParser.match(code)
+        ? ConstantParser
+        : null,
+    )
+  }
+  // pojo
+  else if (PojoParser.match(code)) {
+    // @ts-ignore
+    const nestedStaticMatches = PojoParser?.matchNestedStaticClasses?.(code)
+    if (nestedStaticMatches?.length) {
+      for (let i = nestedStaticMatches.length - 1; i > -1; i--) {
+        const { startLine, endLine, className } = nestedStaticMatches[i]
+        // @ts-ignore
+        const nestedCode = PojoParser?.extractSubclass?.(
+          code,
+          startLine,
+          endLine,
+        )?.replace(/static\s+class/, 'class')
+        const nestedClassPath =
+          javaPath.replace(/\.java$/, '') + `${className}.java`
+        results.push(
+          new PojoParser(
+            nestedCode,
+            nestedClassPath,
+            option?.parserMeta,
+          ).parse(),
+        )
+        // @ts-ignore
+        code = PojoParser?.deleteSubclass?.(code, startLine, endLine)
+      }
+    }
+    Parsers.push(PojoParser)
+  }
+
+  Parsers = Parsers.filter(Boolean)
+  if (!Parsers.length) return null
+
+  return [
+    ...results,
+    ...Parsers.map(P => new P(code, javaPath, option?.parserMeta).parse()),
+  ]
 }
 
 function parseDir(dirPath: string, option?: ParseOption) {
@@ -37,8 +80,8 @@ function parseDir(dirPath: string, option?: ParseOption) {
       const javaPath = path.join(dirPath, file)
       const javaCode = readJava(javaPath)
       if (!javaCode) return acc
-      acc.push(parseJava(javaCode, javaPath, option))
-      return acc
+      const results = parseJava(javaCode, javaPath, option)
+      return results ? [...acc, ...results] : acc
     }, [])
     .filter(Boolean)
 }
