@@ -17,6 +17,7 @@ export type ParseOption = {
   isEnum?: boolean
   isService?: boolean
   parserMeta?: ParserMeta
+  excludes?: string[]
 }
 
 // export type ParseType = 'jsdoc' | 'ts'
