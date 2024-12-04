@@ -45,7 +45,7 @@ const ConstantParser: ParserContructor = class ConstantParser extends BaseParser
         desc: propertyMatch[1],
         type: propertyMatch[2],
         key: propertyMatch[3],
-        value: propertyMatch[4],
+        value: propertyMatch[4]?.replace(/;$/, ''),
       }
       properties.push(p)
     }
