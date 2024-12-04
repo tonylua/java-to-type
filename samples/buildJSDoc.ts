@@ -38,7 +38,7 @@ function j2doc(
   if (isSaveToDir) {
     if (!fs.existsSync(saveTo)) fs.mkdirSync(saveTo)
     parseResult.forEach(r => {
-      const m = /\/(?<fileName>\w+)\.java$/.exec(r.javaPath)
+      const m = /[\/\\](?<fileName>\w+)\.java$/.exec(r.javaPath)
       const { fileName } = m.groups
       const n =
         typeof option?.nameTransformer === 'function'

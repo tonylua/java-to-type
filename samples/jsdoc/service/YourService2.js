@@ -1,4 +1,4 @@
-// 内容自动生成，来自java/service
+// 内容自动生成，来自java\service
 
 /**
  * @typedef {Object} PageInfo
@@ -12,7 +12,7 @@
 
 import request from '@/utils/request'
 
-/** 查询所有 cccFindAll
+/**  cccFindAll
  * @url /ccc/findAll
  * @method GET
  * @param { return}  [xxx]
