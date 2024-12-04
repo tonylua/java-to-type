@@ -13,7 +13,7 @@ const ConstantParser: ParserContructor = class ConstantParser extends BaseParser
   static ENUM_RE = /public\s+class\s+(?<enum_name>\w+)/g
 
   static PROPERTY_RE =
-    /(?:\s*\/\*{2}\n\s*\*\s+([^@\s]+?)\n[\s\S]+?)?public\sstatic\sfinal\s([\w<>[\]]+)\s+([\w_]+)\s*=\s*(("|[^\s$])+);?/g
+    /(?:\s*\/\*{2}\n\s*\*\s+([^@\s]+?)\n[\s\S]+?)?public\sstatic\sfinal\s([\w<>[\]]+)\s+([\w_]+)\s*=\s*([\'\"]?.*[\'\"]?);/g
 
   static match(code: string) {
     const { ENUM_RE, PROPERTY_RE } = ConstantParser
@@ -45,7 +45,7 @@ const ConstantParser: ParserContructor = class ConstantParser extends BaseParser
         desc: propertyMatch[1],
         type: propertyMatch[2],
         key: propertyMatch[3],
-        value: propertyMatch[4]?.replace(/;$/, ''),
+        value: propertyMatch[4],
       }
       properties.push(p)
     }
