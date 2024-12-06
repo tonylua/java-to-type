@@ -1,6 +1,6 @@
 {
   "name": "@tonylua/java-to-type",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "trans java pojo / enum / spring service to jsdoc / typescript",
   "main": "dist/j2type.js",
   "keywords": [
