@@ -79,8 +79,8 @@ function parseDir(dirPath: string, option?: ParseOption) {
       if (path.extname(file) !== '.java') return acc
       const javaPath: string = path.join(dirPath, file)
       const javaCode = readJava(javaPath)
-      if (Array.isArray(option.excludes) 
-        && option.excludes.some(str => javaPath.includes(str))) return acc;
+      if (Array.isArray(option.excludePaths) 
+        && option.excludePaths.some(str => javaPath.includes(str))) return acc;
       if (!javaCode) return acc
       const results = parseJava(javaCode, javaPath, option)
       return results ? [...acc, ...results] : acc
