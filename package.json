@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/tonylua/java-to-type.git"
+    "url": "git+https://github.com/tonylua/java-to-type.git"
   },
   "scripts": {
     "build": "shell-exec --colored-output \"rm -rf dist\" \"microbundle -i src/index.ts -o dist/j2type.js --no-pkg-main -f umd --generateTypes false\"",
