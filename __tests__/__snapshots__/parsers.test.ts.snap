@@ -1,0 +1,702 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AST Parser Snapshot Tests > Enum Parser > parses Color.java correctly > Color.java 1`] = `
+"/**
+ * @readonly
+ * @enum {String}
+ */
+export const Color = {
+  RED: "#FF0000",
+  GREEN: "#00FF00",
+  BLUE: "#0000FF",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > Enum Parser > parses Day.java correctly > Day.java 1`] = `
+"/**
+ * @readonly
+ * @enum {Number}
+ */
+export const Day = {
+  MONDAY: 0,
+  TUESDAY: 1,
+  WEDNESDAY: 2,
+  THURSDAY: 3,
+  FRIDAY: 4,
+  SATURDAY: 5,
+  SUNDAY: 6,
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > Enum Parser > parses ExcelConstant.java correctly > ExcelConstant.java 1`] = `
+"/**
+ * @readonly
+ * @enum {String}
+ */
+export const ExcelConstant = {
+  VALUE_TYPE_FIELD: "valueType",
+  LOOKUP_INFO_FIELD: "lookup",
+  STATUS_HEADER_FIELD_NAME: "处理状态",
+  STATUS_SUCCESS_VALUE: "SUCCESS",
+  EXCEL_EXTENSION_XLSX: ".xlsx",
+  IMAGE_TOPIC: "fa fa-university",
+  IMAGE_SUBJECT_MATTER: "fa fa-file-text-o",
+  IMAGE_RESULT2: "fa fa-sign-out",
+  IMAGE_RESUlt3: "3",
+  BASE64_PREFIX_XLS: "data:application/vnd.ms-excel;base64,",
+  BASE64_PREFIX_XLSX: "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > Enum Parser > parses Geometry.java correctly > Geometry.java 1`] = `
+"/**
+ * @readonly
+ * @enum {Number}
+ */
+export const Geometry = {
+  CIRCLE: 0,
+  SQUARE: 1,
+  TRIANGLE: 2,
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > Enum Parser > parses InterfaceEnums.java correctly > InterfaceEnums.java 1`] = `
+"/**
+ * @readonly
+ * @enum {Number}
+ */
+export const ITSoftStatus = {
+  Draft: 0,
+  Analysis: 1,
+  Solution: 2,
+  DEV: 3,
+  SIT: 4,
+  UAT: 5,
+  UAT_PASS: 6,
+  Wait_Publish: 7,
+  Completed: 99,
+  Close: 11,
+}
+
+
+/**
+ * @readonly
+ * @enum {Number}
+ */
+export const ITSoftAction = {
+  Submit: 0,
+  Reject: 1,
+  Close: 2,
+  Transfer: 3,
+  Publish: 4,
+  OTHER: 1,
+}
+
+
+/**
+ * @readonly
+ * @enum {Number}
+ */
+export const LogType = {
+  SYSTEM: 0,
+  USER: 1,
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > Enum Parser > parses MyEnum.java correctly > MyEnum.java 1`] = `
+"/**
+ * @readonly
+ * @enum {String}
+ */
+export const MyEnum = {
+  VALUEA: "1",
+  VALUE_B: "2",
+  VALUEC: "3",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > Enum Parser > parses StaticMems.java correctly > StaticMems.java 1`] = `
+"/**
+ * @readonly
+ * @enum {String}
+ */
+export const StaticMems = {
+  ABC_ABC: "abc_abc",
+  DEF_DEF: "def_def",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses ColorData.java correctly > ColorData.java 1`] = `
+"/**
+ * @typedef {Object} ColorData
+ * @property {number}  [red]
+ * @property {number}  [green]
+ * @property {number}  [blue]
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses ConfirmOrderResult.java correctly > ConfirmOrderResult.java 1`] = `
+"/**
+ * @typedef {Object} ConfirmOrderResult
+ * @property {Array.<CartPromotionItem>}  [cartPromotionItemList]
+ * @property {Array.<UmsMemberReceiveAddress>}  [memberReceiveAddressList]
+ * @property {Array.<SmsCouponHistoryDetail>}  [couponHistoryDetailList]
+ * @property {UmsIntegrationConsumeSetting}  [integrationConsumeSetting]
+ * @property {number}  [memberIntegration]
+ * @property {CalcAmount}  [calcAmount]
+*/
+
+/**
+ * @typedef {Object} CalcAmount
+ * @property {number}  [totalAmount]
+ * @property {number}  [freightAmount]
+ * @property {number}  [promotionAmount]
+ * @property {number}  [payAmount]
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses PmsProduct.java correctly > PmsProduct.java 1`] = `
+"/**
+ * @typedef {Object} PmsProduct
+ * @property {number}  [id]
+ * @property {number}  [brandId]
+ * @property {number}  [productCategoryId]
+ * @property {number}  [feightTemplateId]
+ * @property {number}  [productAttributeCategoryId]
+ * @property {string}  [name]
+ * @property {string}  [pic]
+ * @property {string}  [productSn]
+ * @property {number}  [deleteStatus]
+ * @property {number}  [publishStatus]
+ * @property {number}  [newStatus]
+ * @property {number}  [recommandStatus]
+ * @property {number}  [verifyStatus]
+ * @property {number}  [sort]
+ * @property {number}  [sale]
+ * @property {number}  [price]
+ * @property {number}  [promotionPrice]
+ * @property {number}  [giftGrowth]
+ * @property {number}  [giftPoint]
+ * @property {number}  [usePointLimit]
+ * @property {string}  [subTitle]
+ * @property {number}  [originalPrice]
+ * @property {number}  [stock]
+ * @property {number}  [lowStock]
+ * @property {string}  [unit]
+ * @property {number}  [weight]
+ * @property {number}  [previewStatus]
+ * @property {string}  [serviceIds]
+ * @property {string}  [keywords]
+ * @property {string}  [note]
+ * @property {string}  [albumPics]
+ * @property {string}  [detailTitle]
+ * @property {string}  [promotionStartTime]
+ * @property {string}  [promotionEndTime]
+ * @property {number}  [promotionPerLimit]
+ * @property {number}  [promotionType]
+ * @property {string}  [brandName]
+ * @property {string}  [productCategoryName]
+ * @property {string}  [description]
+ * @property {string}  [detailDesc]
+ * @property {string}  [detailHtml]
+ * @property {string}  [detailMobileHtml]
+ * @property {number}  [serialVersionUID]
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses PmsProductController.java correctly > PmsProductController.java 1`] = `
+"import request from '@/utils/request'
+
+/** create productCreate
+ * @url /product/create
+ * @method POST
+ * @param {PmsProductParam}  [productParam]
+ * @return {Promise<CommonResult>}
+ */
+
+export function productCreate(productParam) {
+  return request({
+    url: \`/product/create\`,
+    method: 'post',
+  })
+}
+/** getUpdateInfo productUpdateInfo
+ * @url /product/updateInfo/{id}
+ * @method GET
+ * @param {Number}  [id]
+ * @return {Promise<CommonResult.<PmsProductResult>>}
+ */
+
+export function productUpdateInfo(id) {
+  return request({
+    url: \`/product/updateInfo/{id}\`,
+    method: 'get',
+  })
+}
+/** update productUpdate
+ * @url /product/update/{id}
+ * @method POST
+ * @param {Number}  [id]
+ * @param {PmsProductParam}  [productParam]
+ * @return {Promise<CommonResult>}
+ */
+
+export function productUpdate(id, productParam) {
+  return request({
+    url: \`/product/update/{id}\`,
+    method: 'post',
+  })
+}
+/** getList productList
+ * @url /product/list
+ * @method GET
+ * @param {PmsProductQueryParam}  [productQueryParam]
+ * @param {Number}  [pageSize]
+ * @param {Number}  [pageNum]
+ * @return {Promise<CommonResult.<CommonPage>>}
+ */
+
+export function productList(productQueryParam, pageSize, pageNum) {
+  return request({
+    url: \`/product/list\`,
+    method: 'get',
+  })
+}
+/** getList productSimpleList
+ * @url /product/simpleList
+ * @method GET
+ * @param {String}  [keyword]
+ * @return {Promise<CommonResult.<Array>>}
+ */
+
+export function productSimpleList(keyword) {
+  return request({
+    url: \`/product/simpleList\`,
+    method: 'get',
+  })
+}
+/** updateVerifyStatus productUpdateVerifyStatus
+ * @url /product/update/verifyStatus
+ * @method POST
+ * @param {Array.<Number>}  [ids]
+ * @param {Number}  [verifyStatus]
+ * @param {String}  [detail]
+ * @return {Promise<CommonResult>}
+ */
+
+export function productUpdateVerifyStatus(ids, verifyStatus, detail) {
+  return request({
+    url: \`/product/update/verifyStatus\`,
+    method: 'post',
+  })
+}
+/** updatePublishStatus productUpdatePublishStatus
+ * @url /product/update/publishStatus
+ * @method POST
+ * @param {Array.<Number>}  [ids]
+ * @param {Number}  [publishStatus]
+ * @return {Promise<CommonResult>}
+ */
+
+export function productUpdatePublishStatus(ids, publishStatus) {
+  return request({
+    url: \`/product/update/publishStatus\`,
+    method: 'post',
+  })
+}
+/** updateRecommendStatus productUpdateRecommendStatus
+ * @url /product/update/recommendStatus
+ * @method POST
+ * @param {Array.<Number>}  [ids]
+ * @param {Number}  [recommendStatus]
+ * @return {Promise<CommonResult>}
+ */
+
+export function productUpdateRecommendStatus(ids, recommendStatus) {
+  return request({
+    url: \`/product/update/recommendStatus\`,
+    method: 'post',
+  })
+}
+/** updateNewStatus productUpdateNewStatus
+ * @url /product/update/newStatus
+ * @method POST
+ * @param {Array.<Number>}  [ids]
+ * @param {Number}  [newStatus]
+ * @return {Promise<CommonResult>}
+ */
+
+export function productUpdateNewStatus(ids, newStatus) {
+  return request({
+    url: \`/product/update/newStatus\`,
+    method: 'post',
+  })
+}
+/** updateDeleteStatus productUpdateDeleteStatus
+ * @url /product/update/deleteStatus
+ * @method POST
+ * @param {Array.<Number>}  [ids]
+ * @param {Number}  [deleteStatus]
+ * @return {Promise<CommonResult>}
+ */
+
+export function productUpdateDeleteStatus(ids, deleteStatus) {
+  return request({
+    url: \`/product/update/deleteStatus\`,
+    method: 'post',
+  })
+}"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses PmsSkuStock.java correctly > PmsSkuStock.java 1`] = `
+"/**
+ * @typedef {Object} PmsSkuStock
+ * @property {number}  [id]
+ * @property {number}  [productId]
+ * @property {string}  [skuCode]
+ * @property {number}  [price]
+ * @property {number}  [stock]
+ * @property {number}  [lowStock]
+ * @property {string}  [pic]
+ * @property {number}  [sale]
+ * @property {number}  [promotionPrice]
+ * @property {number}  [lockStock]
+ * @property {string}  [spData]
+ * @property {number}  [serialVersionUID]
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses ResultCode.java correctly > ResultCode.java 1`] = `
+"/**
+ * @readonly
+ * @enum {Number}
+ */
+export const ResultCode = {
+  SUCCESS: 200, // API返回码封装类 Created by macro on 2019/4/19.
+  FAILED: 500,
+  VALIDATE_FAILED: 404,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses StudentRecord.java correctly > StudentRecord.java 1`] = `
+"/**
+ * @typedef {Object} StudentRecord
+ * @property {string}  firstName
+ * @property {string}  lastName
+ * @property {number}  studentId
+ * @property {string}  email
+ * @property {string}  phoneNumber
+ * @property {string}  address
+ * @property {string}  country
+ * @property {number}  age
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses SysUser.java correctly > SysUser.java 1`] = `
+"/**
+ * @typedef {Object} SysUser
+ * @property {number}  [serialVersionUID]
+ * @property {number}  [userId] - 用户ID
+ * @property {number}  [deptId] - 部门ID
+ * @property {number}  [parentId] - 部门父ID
+ * @property {number}  [roleId] - 角色ID
+ * @property {string}  [loginName] - 登录名称
+ * @property {string}  [userName] - 用户名称
+ * @property {string}  [userType] - 用户类型
+ * @property {string}  [email] - 用户邮箱
+ * @property {string}  [phonenumber] - 手机号码
+ * @property {string}  [sex] - 用户性别
+ * @property {string}  [avatar] - 用户头像
+ * @property {string}  [password] - 密码
+ * @property {string}  [salt] - 盐加密
+ * @property {string}  [status] - 账号状态（0正常 1停用）
+ * @property {string}  [delFlag] - 删除标志（0代表存在 2代表删除）
+ * @property {string}  [loginIp] - 最后登录IP
+ * @property {string}  [loginDate] - 最后登录时间
+ * @property {string}  [pwdUpdateDate] - 密码最后更新时间
+ * @property {SysDept}  [dept]
+ * @property {Array.<SysRole>}  [roles]
+ * @property {number}  [roleIds] - 角色组
+ * @property {number}  [postIds] - 岗位组
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > External Real-World Samples > parses UserStatus.java correctly > UserStatus.java 1`] = `
+"/**
+ * @readonly
+ * @enum {String}
+ */
+export const UserStatus = {
+  OK: "0",
+  DISABLE: "1",
+  DELETED: "2",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > POJO Parser > parses BaseBankCodeVO.java correctly > BaseBankCodeVO.java 1`] = `
+"/**
+ * @typedef {Object} BaseBankCodeVO
+ * @property {number}  [serialVersionUID]
+ * @property {number}  [bankId] - <p>数据库主键</p>
+ * @property {string}  bankCode
+ * @property {string}  bankCountry
+ * @property {string}  bankName
+ * @property {string}  [bankNo] - <p>银行编号</p>
+ * @property {string}  [bankBranch] - <p>分行</p>
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > POJO Parser > parses MyPojo.java correctly > MyPojo.java 1`] = `
+"/**
+ * @typedef {Object} MyPojo
+ * @property {number}  [id]
+ * @property {number}  [foo] - BU
+ * @property {string}  [name] - BU
+*/"
+`;
+
+exports[`AST Parser Snapshot Tests > Service Parser (TypeScript) > parses MyService.java to TS correctly > ts-MyService.java 1`] = `
+"import request from '@/utils/request'
+
+/** 查询所有 */
+export function cccFindAll(): Promise<SomeCategory[]> {
+  return request({
+    url: \`/ccc/findAll\`,
+    method: 'get',
+  })
+}"
+`;
+
+exports[`AST Parser Snapshot Tests > Service Parser (TypeScript) > parses MyService2.java to TS correctly > ts-MyService2.java 1`] = `
+"import request from '@/utils/request'
+
+/** 查询所有 */
+export function cccFindAll(): Promise<SomeCategory[]> {
+  return request({
+    url: \`/ccc/findAll\`,
+    method: 'get',
+  })
+}
+
+/** 通过竹简查询 */
+export function cccQueryById(id?: number): Promise<BasicInfo> {
+  return request({
+    url: \`/ccc/queryById/{id}\`,
+    method: 'get',
+  })
+}
+
+/** 查询我的 */
+export function cccMyList(info?: MyInfo): Promise<PageInfo<BasicInfo>> {
+  return request({
+    url: \`/ccc/myList\`,
+    method: 'get',
+  })
+}
+
+/** download */
+export function cccFoofoo(type?: string, ids?: Integet[], info?: MyInfo): Promise<string> {
+  return request({
+    url: \`/ccc/foofoo\`,
+    method: 'get',
+  })
+}
+
+/** 注册 */
+export function cccRegister(info?: MyInfo): Promise<Map<string>> {
+  return request({
+    url: \`/ccc/register/{id}\`,
+    method: 'post',
+  })
+}
+
+/** foo.bar,. */
+export function cccInsert(someCategory?: SomeCategory, color?: Color): Promise<number> {
+  return request({
+    url: \`/ccc/insert\`,
+    method: 'post',
+  })
+}"
+`;
+
+exports[`AST Parser Snapshot Tests > Service Parser > parses MyService.java correctly > MyService.java 1`] = `
+"import request from '@/utils/request'
+
+/** 查询所有 cccFindAll
+ * @url /ccc/findAll
+ * @method GET
+ 
+ * @return {Promise<Array.<SomeCategory>>}
+ */
+
+export function cccFindAll() {
+  return request({
+    url: \`/ccc/findAll\`,
+    method: 'get',
+  })
+}"
+`;
+
+exports[`AST Parser Snapshot Tests > Service Parser > parses MyService2.java correctly > MyService2.java 1`] = `
+"import request from '@/utils/request'
+
+/** 查询所有 cccFindAll
+ * @url /ccc/findAll
+ * @method GET
+ 
+ * @return {Promise<Array.<SomeCategory>>}
+ */
+
+export function cccFindAll() {
+  return request({
+    url: \`/ccc/findAll\`,
+    method: 'get',
+  })
+}
+/** 通过竹简查询 cccQueryById
+ * @url /ccc/queryById/{id}
+ * @method GET
+ * @param {Number}  [id]
+ * @return {Promise<BasicInfo>}
+ */
+
+export function cccQueryById(id) {
+  return request({
+    url: \`/ccc/queryById/{id}\`,
+    method: 'get',
+  })
+}
+/** 查询我的 cccMyList
+ * @url /ccc/myList
+ * @method GET
+ * @param {String}  [headers.code]
+ * @param {MyInfo}  [info]
+ * @return {Promise<PageInfo.<BasicInfo>>}
+ */
+
+export function cccMyList(info) {
+  return request({
+    url: \`/ccc/myList\`,
+    method: 'get',
+  })
+}
+/** download cccFoofoo
+ * @url /ccc/foofoo
+ * @method GET
+ * @param {String}  [headers.code]
+ * @param {String}  [type]
+ * @param {Array.<Integet>}  [ids]
+ * @param {MyInfo}  [info]
+ * @return {Promise<String>}
+ */
+
+export function cccFoofoo(type, ids, info) {
+  return request({
+    url: \`/ccc/foofoo\`,
+    method: 'get',
+  })
+}
+/** 注册 cccRegister
+ * @url /ccc/register/{id}
+ * @method POST
+ * @param {MyInfo}  [info]
+ * @return {Promise<Object.<String>>}
+ */
+
+export function cccRegister(info) {
+  return request({
+    url: \`/ccc/register/{id}\`,
+    method: 'post',
+  })
+}
+/** foo.bar,. cccInsert
+ * @url /ccc/insert
+ * @method POST
+ * @param {SomeCategory}  [someCategory]
+ * @param {Color}  [color]
+ * @return {Promise<Number>}
+ */
+
+export function cccInsert(someCategory, color) {
+  return request({
+    url: \`/ccc/insert\`,
+    method: 'post',
+  })
+}"
+`;
+
+exports[`AST Parser Snapshot Tests > TypeScript Output > parses Color.java to TS correctly > ts-Color.java 1`] = `
+"export enum Color {
+  RED = "#FF0000",
+  GREEN = "#00FF00",
+  BLUE = "#0000FF",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > TypeScript Output > parses Day.java to TS correctly > ts-Day.java 1`] = `
+"export enum Day {
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY,
+  SUNDAY,
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > TypeScript Output > parses ExcelConstant.java to TS correctly > ts-ExcelConstant.java 1`] = `
+"export enum ExcelConstant {
+  VALUE_TYPE_FIELD = "valueType",
+  LOOKUP_INFO_FIELD = "lookup",
+  STATUS_HEADER_FIELD_NAME = "处理状态",
+  STATUS_SUCCESS_VALUE = "SUCCESS",
+  EXCEL_EXTENSION_XLSX = ".xlsx",
+  IMAGE_TOPIC = "fa fa-university",
+  IMAGE_SUBJECT_MATTER = "fa fa-file-text-o",
+  IMAGE_RESULT2 = "fa fa-sign-out",
+  IMAGE_RESUlt3 = "3",
+  BASE64_PREFIX_XLS = "data:application/vnd.ms-excel;base64,",
+  BASE64_PREFIX_XLSX = "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > TypeScript Output > parses Geometry.java to TS correctly > ts-Geometry.java 1`] = `
+"export enum Geometry {
+  CIRCLE,
+  SQUARE,
+  TRIANGLE,
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > TypeScript Output > parses MyEnum.java to TS correctly > ts-MyEnum.java 1`] = `
+"export enum MyEnum {
+  VALUEA = "1",
+  VALUE_B = "2",
+  VALUEC = "3",
+}
+"
+`;
+
+exports[`AST Parser Snapshot Tests > TypeScript Output > parses StaticMems.java to TS correctly > ts-StaticMems.java 1`] = `
+"export enum StaticMems {
+  ABC_ABC = "abc_abc",
+  DEF_DEF = "def_def",
+}
+"
+`;

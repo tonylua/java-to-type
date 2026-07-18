@@ -1,16 +1,14 @@
 import type { ParseOption, ParseResult, ParserContructor } from './types/Parser'
-import ServiceParser from './parsers/ServiceParser'
-import EnumParser from './parsers/EnumParser'
-import PojoParser from './parsers/PojoParser'
-import ConstantParser from './parsers/ConstantParser'
+import ServiceParser from './parsers/ast/ServiceParser'
+import EnumParser from './parsers/ast/EnumParser'
+import PojoParser from './parsers/ast/PojoParser'
+import ConstantParser from './parsers/ast/ConstantParser'
 import { readJava } from './utils/file'
 const fs = require('fs')
 const path = require('path')
 
 global.dtsCache = {}
 
-// TODO 匹配更多特征
-// TODO 特征放在外部配置文件中?
 function parseJava(
   javaCode: string,
   javaPath: string,
@@ -36,30 +34,6 @@ function parseJava(
   }
   // pojo
   else if (PojoParser.match(code)) {
-    // @ts-ignore
-    const nestedStaticMatches = PojoParser?.matchNestedStaticClasses?.(code)
-    if (nestedStaticMatches?.length) {
-      for (let i = nestedStaticMatches.length - 1; i > -1; i--) {
-        const { startLine, endLine, className } = nestedStaticMatches[i]
-        // @ts-ignore
-        const nestedCode = PojoParser?.extractSubclass?.(
-          code,
-          startLine,
-          endLine,
-        )?.replace(/static\s+class/, 'class')
-        const nestedClassPath =
-          javaPath.replace(/\.java$/, '') + `${className}.java`
-        results.push(
-          new PojoParser(
-            nestedCode,
-            nestedClassPath,
-            option?.parserMeta,
-          ).parse(),
-        )
-        // @ts-ignore
-        code = PojoParser?.deleteSubclass?.(code, startLine, endLine)
-      }
-    }
     Parsers.push(PojoParser)
   }
 
@@ -75,11 +49,11 @@ function parseJava(
 function parseDir(dirPath: string, option?: ParseOption) {
   const files = fs.readdirSync(dirPath)
   return files
-    .reduce((acc: ParseResult[], file: File) => {
+    .reduce((acc: ParseResult[], file: string) => {
       if (path.extname(file) !== '.java') return acc
       const javaPath: string = path.join(dirPath, file)
       const javaCode = readJava(javaPath)
-      if (Array.isArray(option.excludePaths) 
+      if (Array.isArray(option?.excludePaths)
         && option.excludePaths.some(str => javaPath.includes(str))) return acc;
       if (!javaCode) return acc
       const results = parseJava(javaCode, javaPath, option)

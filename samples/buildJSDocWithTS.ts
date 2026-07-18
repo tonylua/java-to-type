@@ -60,9 +60,15 @@ fs.mkdirSync(saveToBase)
 
 const enumDir = path.resolve(javaProjPath, 'enum')
 const pojoDir = path.resolve(javaProjPath, 'pojo')
+const serviceDir = path.resolve(javaProjPath, 'service')
 const enumDts = path.resolve(saveToBase, 'enum.d.ts')
 const pojoDts = path.resolve(saveToBase, 'pojo.d.ts')
 j2doc(enumDir, enumDts, {
   isEnum: true,
 })
 j2doc(pojoDir, pojoDts)
+
+j2doc(serviceDir, path.resolve(saveToBase, 'service'), {
+  isService: true,
+  nameTransformer: (name: string) => name.replace('My', 'Your') + '.ts',
+})

@@ -2,17 +2,18 @@
 
 /**
  * @typedef {Object} BaseBankCodeVO
- * @property {Number}  [bankId]
- * @property {String}  [bankCode]
- * @property {String}  [bankCountry]
- * @property {String}  [bankName]
- * @property {String}  [bankNo]
- * @property {String}  [bankBranch]
+ * @property {number}  [serialVersionUID]
+ * @property {number}  [bankId] - <p>数据库主键</p>
+ * @property {string}  bankCode
+ * @property {string}  bankCountry
+ * @property {string}  bankName
+ * @property {string}  [bankNo] - <p>银行编号</p>
+ * @property {string}  [bankBranch] - <p>分行</p>
 */
 
 /**
  * @typedef {Object} MyPojo
- * @property {Number}  [id]
- * @property {Number}  [foo] - BU
- * @property {String}  [name]
+ * @property {number}  [id]
+ * @property {number}  [foo] - BU
+ * @property {string}  [name] - BU
 */

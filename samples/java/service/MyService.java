@@ -2,7 +2,7 @@
 @RequestMapping("/ccc/")
 @CrossOrigin(origin = {
   "http://*.foo.com"
-});
+})
 public class FooController extends XXController {
 
   @Autowired

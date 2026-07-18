@@ -12,14 +12,16 @@
 
 import request from '@/utils/request'
 
-/**  cccFindAll
+/** 查询所有 cccFindAll
  * @url /ccc/findAll
  * @method GET
- * @return {Promise<SomeCategory[]>}
+ 
+ * @return {Promise<Array.<SomeCategory>>}
  */
-export function cccFindAll () {
+
+export function cccFindAll() {
   return request({
-    url: `/api/ccc/findAll`,
+    url: `/ccc/findAll`,
     method: 'get',
   })
 }

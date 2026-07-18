@@ -12,61 +12,86 @@
 
 import request from '@/utils/request'
 
-/**  cccFindAll
+/** 查询所有 cccFindAll
  * @url /ccc/findAll
  * @method GET
- * @param { return}  [xxx]
- * @param {PPPP)}  [public]
- * @param { BasicInfo}  [findById]
+ 
+ * @return {Promise<Array.<SomeCategory>>}
+ */
+
+export function cccFindAll() {
+  return request({
+    url: `/ccc/findAll`,
+    method: 'get',
+  })
+}
+/** 通过竹简查询 cccQueryById
+ * @url /ccc/queryById/{id}
+ * @method GET
  * @param {Number}  [id]
- * @param { return}  [xxx]
- * @param {PPPP)}  [public]
- * @param { PageInfo<BasicInfo>}  [myList]
+ * @return {Promise<BasicInfo>}
+ */
+
+export function cccQueryById(id) {
+  return request({
+    url: `/ccc/queryById/{id}`,
+    method: 'get',
+  })
+}
+/** 查询我的 cccMyList
+ * @url /ccc/myList
+ * @method GET
  * @param {String}  [headers.code]
  * @param {MyInfo}  [info]
- * @param { return}  [xxx]
- * @param {public}  [String]
+ * @return {Promise<PageInfo.<BasicInfo>>}
+ */
+
+export function cccMyList(info) {
+  return request({
+    url: `/ccc/myList`,
+    method: 'get',
+  })
+}
+/** download cccFoofoo
+ * @url /ccc/foofoo
+ * @method GET
  * @param {String}  [headers.code]
  * @param {String}  [type]
- * @param {Integet[]}  [ids]
+ * @param {Array.<Integet>}  [ids]
  * @param {MyInfo}  [info]
- * @param { return}  [xxx]
- * @param {PPPP)}  [public]
- * @param { Map<String,}  [Object]
- * @param {>}  [register]
+ * @return {Promise<String>}
+ */
+
+export function cccFoofoo(type, ids, info) {
+  return request({
+    url: `/ccc/foofoo`,
+    method: 'get',
+  })
+}
+/** 注册 cccRegister
+ * @url /ccc/register/{id}
+ * @method POST
  * @param {MyInfo}  [info]
- * @param { return}  [xxx]
- * @param {public}  [Integer]
+ * @return {Promise<Object.<String>>}
+ */
+
+export function cccRegister(info) {
+  return request({
+    url: `/ccc/register/{id}`,
+    method: 'post',
+  })
+}
+/** foo.bar,. cccInsert
+ * @url /ccc/insert
+ * @method POST
  * @param {SomeCategory}  [someCategory]
  * @param {Color}  [color]
- * @return {Promise<SomeCategory[]>}
+ * @return {Promise<Number>}
  */
-export function cccFindAll (xxx, public, findById, id, xxx, public, myList, info, xxx, String, type, ids, info, xxx, public, Object, register, info, xxx, Integer, someCategory, color) {
+
+export function cccInsert(someCategory, color) {
   return request({
-    url: `/api/ccc/findAll`,
-    method: 'get',
-    params: {
-      xxx,
-      public,
-      findById,
-      xxx,
-      public,
-      myList,
-      info,
-      xxx,
-      String,
-      type,
-      ids,
-      info,
-      xxx,
-      public,
-      Object,
-      register,
-      info,
-      xxx,
-      Integer,
-      someCategory,
-      color
-    }
+    url: `/ccc/insert`,
+    method: 'post',
   })
 }

@@ -17,7 +17,9 @@
   "scripts": {
     "build": "shell-exec --colored-output \"rm -rf dist\" \"microbundle -i src/index.ts -o dist/j2type.js --no-pkg-main -f umd --generateTypes false\"",
     "examples": "npx ts-node samples/buildJSDoc.ts",
-    "examples:withTS": "npx ts-node samples/buildJSDocWithTS.ts"
+    "examples:withTS": "npx ts-node samples/buildJSDocWithTS.ts",
+    "test": "vitest run",
+    "test:u": "vitest run --update"
   },
   "devDependencies": {
     "@types/node": "^20.8.3",
@@ -28,10 +30,12 @@
     "eslint-plugin-prettier": "^5.0.0",
     "microbundle": "^0.15.1",
     "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
     "shell-executor": "^0.3.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^4.1.10"
   },
   "dependencies": {
-    "rimraf": "^5.0.5"
+    "java-parser": "^3.0.1"
   }
 }
