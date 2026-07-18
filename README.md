@@ -2,6 +2,8 @@
 
 Convert Java POJO / enum / Spring controller source files to JSDoc or TypeScript type definitions — a lightweight alternative to protobuf for teams that need front-end types from a Java back-end without an IDL layer.
 
+It is aimed at legacy or non-standardized Java back-ends that have no OpenAPI/Swagger contract and no shared schema layer. Instead of hand-mirroring types on the front end, it parses the business data structures directly from the Java source and gives you a semi-automated type layer — the practical effect of a protobuf middle layer, without asking the back-end to change anything.
+
 ## Install
 
 ```bash
