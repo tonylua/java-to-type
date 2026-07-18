@@ -1,8 +1,8 @@
 # java-to-type
 
-Convert Java POJO / enum / Spring controller source files to JSDoc or TypeScript type definitions — a lightweight alternative to protobuf for teams that need front-end types from a Java back-end without an IDL layer.
+Generate front-end JSDoc or TypeScript types directly from Java POJO / enum / Spring controller source — a lightweight, back-end-agnostic alternative to protobuf.
 
-It is aimed at legacy or non-standardized Java back-ends that have no OpenAPI/Swagger contract and no shared schema layer. Instead of hand-mirroring types on the front end, it parses the business data structures directly from the Java source and gives you a semi-automated type layer — the practical effect of a protobuf middle layer, without asking the back-end to change anything.
+For front/back-separated projects with no OpenAPI/Swagger contract and no shared schema, the domain model gets mirrored by hand on the front end — drifting types, hard-coded defaults, stale mocks. This parses the Java source directly and keeps a semi-automated type layer in sync, without asking the back-end to change anything.
 
 ## Install
 
