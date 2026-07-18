@@ -10,6 +10,9 @@
   ],
   "author": "tonylua",
   "homepage": "https://github.com/tonylua/java-to-type",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/tonylua/java-to-type.git"
